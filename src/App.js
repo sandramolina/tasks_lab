@@ -3,31 +3,39 @@ import './App.css';
 
 function App() {
   const [tasks, setTask] = useState([
-    'Buy shopping',
-    'Clean bathroom',
-    'Car s MOT',
+    { title: 'Buy shopping', priority: 'High' },
+    { title: 'Clean bathroom', priority: 'Low' },
+    { title: 'Car s MOT', priority: 'Low' },
   ]);
 
-  //const tasksObject = tasks.map((task, index) => ({ id: index, title: task }));
+  const [newTaskTitle, setNewTaskTitle] = useState('');
+
+  const [newTaskPriority, setNewTaskPriority] = useState('');
 
   const taskNodes = tasks.map((task, index) => {
     return (
       <li key={index}>
-        <span>{task}</span>
+        <span className={task.priority === 'High' ? 'red' : ''}>
+          {task.title}
+        </span>
       </li>
     );
   });
 
-  const [newTask, setNewTask] = useState('');
-
-  const handleTaskInput = (event) => setNewTask(event.target.value);
+  const handleTaskInput = (event) => setNewTaskTitle(event.target.value);
 
   const saveNewTask = (event) => {
     event.preventDefault();
-    const copyTask = [...tasks, newTask];
+    const copyTask = [
+      ...tasks,
+      { title: newTaskTitle, priority: newTaskPriority },
+    ];
     setTask(copyTask);
-    setNewTask('');
+    setNewTaskTitle('');
   };
+
+  const handleTaskPriority = (event) => setNewTaskPriority(event.target.value);
+
   return (
     <div className='App'>
       <h1>To-Do List</h1>
@@ -38,10 +46,28 @@ function App() {
         <input
           id='new-task'
           type='text'
-          value={newTask}
+          value={newTaskTitle}
           onChange={handleTaskInput}
           placeholder='e.g Walk the dog'
         />
+        <div>
+          <input
+            type='radio'
+            id='high'
+            name='priority'
+            value='High'
+            onChange={handleTaskPriority}
+          ></input>
+          <label htmlFor='high'>High</label>
+          <input
+            type='radio'
+            id='low'
+            name='priority'
+            value='Low'
+            onChange={handleTaskPriority}
+          ></input>
+          <label htmlFor='low'>Low</label>
+        </div>
         <input type='submit' value='Save New Task' />
       </form>
     </div>
