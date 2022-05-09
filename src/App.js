@@ -3,9 +3,10 @@ import './App.css';
 
 function App() {
   const [tasks, setTask] = useState([
-    { title: 'Buy shopping', priority: 'High' },
-    { title: 'Clean bathroom', priority: 'Low' },
-    { title: 'Car s MOT', priority: 'Low' },
+    { title: 'Buy groceries', priority: 'High' },
+    { title: 'Clean the BBP', priority: 'Low' },
+    { title: 'Walk the cat', priority: 'Low' },
+    { title: 'Get some new shoes', priority: 'High' },
   ]);
 
   const [newTaskTitle, setNewTaskTitle] = useState('');
@@ -15,7 +16,11 @@ function App() {
   const taskNodes = tasks.map((task, index) => {
     return (
       <li key={index}>
-        <span className={task.priority === 'High' ? 'red' : ''}>
+        <span
+          className={
+            task.priority === 'High' ? 'high-priority' : 'low-priority'
+          }
+        >
           {task.title}
         </span>
       </li>
@@ -48,6 +53,7 @@ function App() {
           type='text'
           value={newTaskTitle}
           onChange={handleTaskInput}
+          required
           placeholder='e.g Walk the dog'
         />
         <div>
@@ -68,7 +74,7 @@ function App() {
           ></input>
           <label htmlFor='low'>Low</label>
         </div>
-        <input type='submit' value='Save New Task' />
+        <input className='submit-btn' type='submit' value='Save New Task' />
       </form>
     </div>
   );
